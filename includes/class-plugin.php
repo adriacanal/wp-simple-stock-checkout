@@ -12,6 +12,8 @@ final class Plugin {
     }
 
     public function init(): void {
-        // (Punt 2) Admin/Public/Cron.
+        if (is_admin() && class_exists('\\WPSSC\\Admin\\Admin')) {
+            (new \WPSSC\Admin\Admin())->init();
+        }
     }
 }
