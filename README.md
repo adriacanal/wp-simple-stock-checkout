@@ -75,6 +75,17 @@ Si no, aquest plugin és més lleuger, simple i fàcil de mantenir.
 
 ---
 
+## 📦 Importació de variants (CSV)
+
+Ves a **Stock Checkout → Import Variants** i puja un arxiu CSV
+amb el següent header:
+
+sku,model,color,size,price,stock_total,is_active
+
+Exemple d'arxiu: `examples/variants-sample.csv`
+
+---
+
 ## 🛠 Estat del projecte
 
 Aquest plugin està en desenvolupament actiu.
