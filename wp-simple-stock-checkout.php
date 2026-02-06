@@ -29,6 +29,8 @@ $optional = [
     // Admin
     'includes/admin/class-admin.php',
     'includes/admin/class-admin-menu.php',
+    'includes/admin/class-settings-page.php',
+    'includes/admin/class-variants-import-page.php',
 ];
 
 foreach ($optional as $rel) {
