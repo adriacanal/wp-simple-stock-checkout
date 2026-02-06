@@ -8,5 +8,11 @@ final class Admin {
         if (class_exists('\\WPSSC\\Admin\\AdminMenu')) {
             (new AdminMenu())->init();
         }
+        if (class_exists('\\WPSSC\\Admin\\SettingsPage')) {
+            (new SettingsPage())->init();
+        }
+        if (class_exists('\\WPSSC\\Admin\\VariantsImportPage')) {
+            (new VariantsImportPage())->init();
+        }
     }
 }
