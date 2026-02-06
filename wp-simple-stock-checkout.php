@@ -31,6 +31,9 @@ $optional = [
     'includes/admin/class-admin-menu.php',
     'includes/admin/class-settings-page.php',
     'includes/admin/class-variants-import-page.php',
+    'includes/admin/tables/class-variants-list-table.php',
+    'includes/admin/class-variants-list-page.php',
+    'includes/repositories/class-variant-repository.php',
 ];
 
 foreach ($optional as $rel) {

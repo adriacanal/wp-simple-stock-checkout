@@ -67,7 +67,7 @@ final class VariantsImportPage {
         $fh = fopen($tmp, 'r');
         if (!$fh) wp_die('Cannot read uploaded file.');
 
-        $header = fgetcsv($fh);
+        $header = fgetcsv($fh, 0, ',', '"', '\\');
         if (!$header) wp_die('Empty CSV.');
 
         $header = array_map('trim', $header);
@@ -82,7 +82,7 @@ final class VariantsImportPage {
         $count = 0;
         $line = 1;
 
-        while (($cols = fgetcsv($fh)) !== false) {
+        while (($cols = fgetcsv($fh, 0, ',', '"', '\\')) !== false) {
             $line++;
 
             // Skip blank lines
