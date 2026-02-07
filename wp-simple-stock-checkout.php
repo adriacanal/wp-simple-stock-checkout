@@ -15,34 +15,7 @@ define('WPSSC_PLUGIN_FILE', __FILE__);
 define('WPSSC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WPSSC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-// Core required files
-require_once WPSSC_PLUGIN_DIR . 'includes/class-plugin.php';
-require_once WPSSC_PLUGIN_DIR . 'includes/class-activator.php';
-require_once WPSSC_PLUGIN_DIR . 'includes/class-deactivator.php';
-require_once WPSSC_PLUGIN_DIR . 'includes/class-db.php';
-
-// Optional (safe) includes — add as you create them
-$optional = [
-    'includes/class-settings.php',
-    'includes/class-capabilities.php',
-
-    // Admin
-    'includes/admin/class-admin.php',
-    'includes/admin/class-admin-menu.php',
-    'includes/admin/class-settings-page.php',
-    'includes/admin/class-variants-import-page.php',
-    'includes/admin/tables/class-variants-list-table.php',
-    'includes/admin/class-variants-list-page.php',
-    'includes/repositories/class-variant-repository.php',
-];
-
-foreach ($optional as $rel) {
-    $path = WPSSC_PLUGIN_DIR . $rel;
-    if (file_exists($path)) {
-        require_once $path;
-    }
-}
-
+require_once WPSSC_PLUGIN_DIR . 'vendor/autoload.php';
 
 add_action('plugins_loaded', function () {
     \WPSSC\Plugin::instance()->init();
@@ -50,6 +23,11 @@ add_action('plugins_loaded', function () {
 
 register_activation_hook(__FILE__, function () {
     \WPSSC\Activator::activate();
+
+    // Ensure DB schema for stock movements (safe no-op if already exists)
+    if (class_exists('\WPSSC\Migrations\StockMovementsMigration')) {
+        \WPSSC\Migrations\StockMovementsMigration::install();
+    }
 });
 
 register_deactivation_hook(__FILE__, function () {
