@@ -5,9 +5,17 @@ if (!defined('ABSPATH')) { exit; }
 
 final class DB {
 
-    public static function table(string $name): string {
+    public static function wpdb(): \wpdb {
         global $wpdb;
-        return $wpdb->prefix . 'wpssc_' . $name;
+        return $wpdb;
+    }
+
+    public static function table(string $name): string {
+        return self::wpdb()->prefix . 'wpssc_' . $name;
+    }
+
+    public static function noMysqlUtc(): string {
+        return gmdate('Y-m-d H:i:s');
     }
 
     public static function create_or_update_schema(): void {

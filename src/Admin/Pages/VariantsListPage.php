@@ -1,8 +1,8 @@
 <?php
-namespace WPSSC\Admin;
+namespace WPSSC\Admin\Pages;
 
-use WPSSC\Capabilities;
-use WPSSC\Repositories\VariantRepository;
+use WPSSC\Security\Capabilities;
+use WPSSC\Admin\Tables\VariantsListTable;
 
 if (!defined('ABSPATH')) { exit; }
 

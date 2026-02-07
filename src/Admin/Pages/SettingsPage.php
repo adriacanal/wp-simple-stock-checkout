@@ -1,8 +1,8 @@
 <?php
-namespace WPSSC\Admin;
+namespace WPSSC\Admin\Pages;
 
-use WPSSC\Capabilities;
-use WPSSC\Settings;
+use WPSSC\Security\Capabilities;
+use WPSSC\Settings\Settings;
 
 if (!defined('ABSPATH')) { exit; }
 

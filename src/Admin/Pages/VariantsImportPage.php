@@ -1,7 +1,7 @@
 <?php
-namespace WPSSC\Admin;
+namespace WPSSC\Admin\Pages;
 
-use WPSSC\Capabilities;
+use WPSSC\Security\Capabilities;
 use WPSSC\Repositories\VariantRepository;
 
 if (!defined('ABSPATH')) { exit; }

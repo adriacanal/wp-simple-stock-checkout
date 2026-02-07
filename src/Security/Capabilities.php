@@ -1,5 +1,5 @@
 <?php
-namespace WPSSC;
+namespace WPSSC\Security;
 
 if (!defined('ABSPATH')) { exit; }
 

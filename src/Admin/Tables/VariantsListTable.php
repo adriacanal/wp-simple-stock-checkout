@@ -1,5 +1,5 @@
 <?php
-namespace WPSSC\Admin;
+namespace WPSSC\Admin\Tables;
 
 use WP_List_Table;
 use WPSSC\DB;

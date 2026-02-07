@@ -1,6 +1,9 @@
 <?php
 namespace WPSSC;
 
+use WPSSC\Settings\Settings;
+use WPSSC\Security\Capabilities;
+
 if (!defined('ABSPATH')) { exit; }
 
 final class Activator {
