@@ -90,28 +90,19 @@ final class AdminMenu {
             wp_die(__('No tens permisos per fer aquesta acció.', 'wp-simple-stock-checkout'));
         }
 
-        // Nonce
         $nonce = isset($_POST['_wpssc_nonce']) ? (string) $_POST['_wpssc_nonce'] : '';
         if (!$nonce || !wp_verify_nonce($nonce, 'wpssc_save_settings')) {
             wp_die(__('Security check failed (invalid nonce).', 'wp-simple-stock-checkout'));
         }
 
-        // Recollim dades del formulari.
-        // Recomanació: al SettingsPage, agrupa els camps sota name="wpssc_settings[...]" per evitar col·lisions.
         $raw = isset($_POST['wpssc_settings']) && is_array($_POST['wpssc_settings'])
             ? (array) $_POST['wpssc_settings']
             : [];
 
-        // Permet només claus conegudes (whitelist).
-        // TODO: omple aquesta llista amb les teves keys reals quan les tinguis tancades.
-        // Mentrestant, pots deixar-la buida i acceptar totes les claus (no recomanat).
+        // IMPORTANT: whitelist explícita
         $allowed_keys = [
-            // Exemples típics (substitueix/afegeix les teves):
             'checkout_url',
             'reservation_minutes',
-            'cron_interval_minutes',
-            'admin_notice_email',
-            'is_debug',
         ];
 
         $clean = [];
@@ -119,50 +110,36 @@ final class AdminMenu {
         foreach ($raw as $key => $value) {
             $key = sanitize_key((string) $key);
 
-            // Si vols fer-ho estricte: ignora claus no permeses
-            if (!empty($allowed_keys) && !in_array($key, $allowed_keys, true)) {
+            if (!in_array($key, $allowed_keys, true)) {
                 continue;
             }
 
-            // Sanitització per tipus (heurística segura)
-            if (is_array($value)) {
-                // Evitem arrays profunds per seguretat; si en vols, ho especifiquem explícitament
-                $clean[$key] = array_map('sanitize_text_field', $value);
+            if ($key === 'checkout_url') {
+                $url = esc_url_raw((string)$value);
+
+                if ($url !== '' && !preg_match('#^https?://#i', $url)) {
+                    $url = '';
+                }
+
+                $clean[$key] = $url;
                 continue;
             }
 
-            $value = (string) $value;
-
-            // Heurístiques per key
-            if (str_contains($key, 'url')) {
-                $clean[$key] = esc_url_raw($value);
-            } elseif (str_contains($key, 'email')) {
-                $clean[$key] = sanitize_email($value);
-            } elseif (str_contains($key, 'minutes') || str_contains($key, 'qty') || str_contains($key, 'limit')) {
-                $clean[$key] = (int) $value;
-            } elseif (str_starts_with($key, 'is_') || str_starts_with($key, 'enable_')) {
-                // checkboxes: si no ve, normalment és false; aquí només processem els que han vingut
-                $clean[$key] = $value === '1' || $value === 'on' ? 1 : 0;
-            } else {
-                $clean[$key] = sanitize_text_field($value);
+            if ($key === 'reservation_minutes') {
+                $mins = (int)$value;
+                $mins = max(1, min(1440, $mins));
+                $clean[$key] = $mins;
+                continue;
             }
+
+            $clean[$key] = sanitize_text_field((string)$value);
         }
-
-        // Checkboxes “off”: si al formulari tens checkboxes dins wpssc_settings, quan no es marquen no venen al POST.
-        // Si tens flags, és millor posar hidden 0 + checkbox 1. Si no ho tens, pots forçar defaults aquí.
-        // Exemple:
-        // if (!isset($raw['is_debug'])) $clean['is_debug'] = 0;
 
         update_option('wpssc_settings', $clean, false);
 
-        // Redirecció a la pàgina Settings
-        $settings_slug = defined('\WPSSC\Admin\SettingsPage::PAGE_SLUG')
-            ? SettingsPage::PAGE_SLUG
-            : 'wpssc-settings';
-
         $redirect = add_query_arg(
             [
-                'page' => $settings_slug,
+                'page' => SettingsPage::PAGE_SLUG,
                 'settings-updated' => '1',
             ],
             admin_url('admin.php')
@@ -171,5 +148,6 @@ final class AdminMenu {
         wp_safe_redirect($redirect);
         exit;
     }
+
 
 }
