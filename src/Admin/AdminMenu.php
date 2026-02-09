@@ -99,10 +99,12 @@ final class AdminMenu {
             ? (array) $_POST['wpssc_settings']
             : [];
 
-        // IMPORTANT: whitelist explícita
         $allowed_keys = [
-            'checkout_url',
-            'reservation_minutes',
+            'reserve_minutes',
+            'checkout_url_child',
+            'checkout_url_adult',
+            'require_email',
+            'checkout_url', // compat opcional
         ];
 
         $clean = [];
@@ -114,28 +116,35 @@ final class AdminMenu {
                 continue;
             }
 
-            if ($key === 'checkout_url') {
-                $url = esc_url_raw((string)$value);
-
-                if ($url !== '' && !preg_match('#^https?://#i', $url)) {
-                    $url = '';
-                }
-
-                $clean[$key] = $url;
+            if ($key === 'reserve_minutes') {
+                $mins = (int) $value;
+                $mins = max(1, min(1440, $mins));
+                $clean[$key] = $mins;
                 continue;
             }
 
-            if ($key === 'reservation_minutes') {
-                $mins = (int)$value;
-                $mins = max(1, min(1440, $mins));
-                $clean[$key] = $mins;
+            if ($key === 'require_email') {
+                $clean[$key] = ((string)$value === '1' || (string)$value === 'on') ? 1 : 0;
+                continue;
+            }
+
+            if ($key === 'checkout_url' || $key === 'checkout_url_child' || $key === 'checkout_url_adult') {
+                $url = esc_url_raw((string)$value);
+                if ($url !== '' && !preg_match('#^https?://#i', $url)) {
+                    $url = '';
+                }
+                $clean[$key] = $url;
                 continue;
             }
 
             $clean[$key] = sanitize_text_field((string)$value);
         }
 
-        update_option('wpssc_settings', $clean, false);
+        // Conserva claus existents que no estiguin al formulari (per no “esborrar” config antiga)
+        $existing = \WPSSC\Settings\Settings::all();
+        $merged = array_merge($existing, $clean);
+
+        update_option('wpssc_settings', $merged, false);
 
         $redirect = add_query_arg(
             [
@@ -148,6 +157,5 @@ final class AdminMenu {
         wp_safe_redirect($redirect);
         exit;
     }
-
 
 }

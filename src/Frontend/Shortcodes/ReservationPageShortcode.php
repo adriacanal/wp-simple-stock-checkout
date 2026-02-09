@@ -34,12 +34,14 @@ final class ReservationPageShortcode
         $status = (string)$order['status'];
         $reserved_until = (string)$order['reserved_until'];
 
-        $settings = (array) get_option('wpssc_settings', []);
-        $base_checkout = isset($settings['checkout_url']) ? esc_url_raw((string)$settings['checkout_url']) : '';
+        $base_checkout = isset($order['checkout_url']) ? esc_url_raw((string)$order['checkout_url']) : '';
+
+        if ($base_checkout === '') {
+            $base_checkout = Settings::checkout_url('child');
+        }
 
         $checkout_link = '';
         if ($base_checkout !== '') {
-            // IMPORTANT: no fem open redirect intern; només generem un enllaç extern sanititzat.
             $checkout_link = add_query_arg(['token' => $token], $base_checkout);
         }
 
