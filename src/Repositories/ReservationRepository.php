@@ -28,12 +28,6 @@ final class ReservationRepository
         $this->tItems    = DB::table('order_items');
     }
 
-    /**
-     * Crea una reserva atòmica:
-     * - incrementa stock_reserved si hi ha disponibilitat
-     * - crea order + order_item
-     * Retorna token.
-     */
     public function create_reservation(int $variant_id, int $qty, string $email, int $ttl_minutes, ?string $checkout_url = null): string
     {
         $variant_id = (int)$variant_id;
@@ -44,7 +38,7 @@ final class ReservationRepository
         if ($qty < 1) throw new \InvalidArgumentException('Invalid quantity.');
         if (!is_email($email)) throw new \InvalidArgumentException('Invalid email.');
 
-        $ttl_minutes = max(1, min(1440, (int)$ttl_minutes)); // 1 min a 24h
+        $ttl_minutes = max(1, min(1440, (int)$ttl_minutes));
         $now = gmdate('Y-m-d H:i:s');
         $reserved_until = gmdate('Y-m-d H:i:s', time() + ($ttl_minutes * 60));
 
@@ -73,13 +67,13 @@ final class ReservationRepository
             $inserted = $this->db->insert(
                 $this->tOrders,
                 [
-                    'token'         => $token,
-                    'email'         => $email,
-                    'status'        => self::STATUS_RESERVED,
-                    'reserved_until'=> $reserved_until,
-                    'created_at'    => $now,
-                    'checkout_url'  => $checkout_url,
-                    'meta'          => null,
+                    'token'          => $token,
+                    'email'          => $email,
+                    'status'         => self::STATUS_RESERVED,
+                    'reserved_until' => $reserved_until,
+                    'created_at'     => $now,
+                    'checkout_url'   => $checkout_url,
+                    'meta'           => null,
                 ],
                 ['%s','%s','%s','%s','%s','%s','%s']
             );
@@ -141,18 +135,53 @@ final class ReservationRepository
 
     /**
      * Expira una ordre si encara està reserved i ja ha passat reserved_until.
-     * Allibera stock_reserved en conseqüència.
+     * Deleguem a expire_order_by_id() per no duplicar lògica.
      */
     public function expire_if_needed(string $token): bool
     {
         $token = trim($token);
         if (!$this->is_valid_token($token)) return false;
 
+        // llegim l’ID (sense lock aquí; el lock es fa dins expire_order_by_id)
+        $order_id = (int)$this->db->get_var(
+            $this->db->prepare("SELECT id FROM {$this->tOrders} WHERE token=%s LIMIT 1", $token)
+        );
+
+        if ($order_id < 1) return false;
+
+        return $this->expire_order_by_id($order_id);
+    }
+
+    public function find_expired_reserved_order_ids(int $limit = 50): array
+    {
+        $limit = max(1, min(500, (int)$limit));
+
+        $sql = "
+            SELECT id
+            FROM {$this->tOrders}
+            WHERE status = %s
+              AND reserved_until < UTC_TIMESTAMP()
+            ORDER BY reserved_until ASC, id ASC
+            LIMIT %d
+        ";
+
+        $rows = (array) $this->db->get_col(
+            $this->db->prepare($sql, self::STATUS_RESERVED, $limit)
+        );
+
+        return array_map('intval', $rows);
+    }
+
+    public function expire_order_by_id(int $order_id): bool
+    {
+        $order_id = (int)$order_id;
+        if ($order_id < 1) return false;
+
         $this->db->query('START TRANSACTION');
 
         try {
             $order = $this->db->get_row(
-                $this->db->prepare("SELECT * FROM {$this->tOrders} WHERE token=%s LIMIT 1 FOR UPDATE", $token),
+                $this->db->prepare("SELECT * FROM {$this->tOrders} WHERE id=%d LIMIT 1 FOR UPDATE", $order_id),
                 ARRAY_A
             );
 
@@ -161,38 +190,23 @@ final class ReservationRepository
                 return false;
             }
 
-            if ($order['status'] !== self::STATUS_RESERVED) {
+            if ((string)$order['status'] !== self::STATUS_RESERVED) {
                 $this->db->query('ROLLBACK');
                 return false;
             }
 
             $now = gmdate('Y-m-d H:i:s');
-            if ($now <= $order['reserved_until']) {
+            if ($now <= (string)$order['reserved_until']) {
                 $this->db->query('ROLLBACK');
                 return false;
             }
 
-            $items = (array)$this->db->get_results(
-                $this->db->prepare("SELECT variant_id, qty FROM {$this->tItems} WHERE order_id=%d", (int)$order['id']),
-                ARRAY_A
-            );
-
-            foreach ($items as $it) {
-                $variant_id = (int)$it['variant_id'];
-                $qty = (int)$it['qty'];
-
-                $sqlRelease = "
-                    UPDATE {$this->tVariants}
-                    SET stock_reserved = GREATEST(stock_reserved - %d, 0)
-                    WHERE id = %d
-                ";
-                $this->db->query($this->db->prepare($sqlRelease, $qty, $variant_id));
-            }
+            $this->release_reserved_for_order($order_id);
 
             $this->db->update(
                 $this->tOrders,
                 ['status' => self::STATUS_EXPIRED],
-                ['id' => (int)$order['id']],
+                ['id' => $order_id],
                 ['%s'],
                 ['%d']
             );
@@ -203,6 +217,26 @@ final class ReservationRepository
         } catch (\Throwable $e) {
             $this->db->query('ROLLBACK');
             throw $e;
+        }
+    }
+
+    private function release_reserved_for_order(int $order_id): void
+    {
+        $items = (array) $this->db->get_results(
+            $this->db->prepare("SELECT variant_id, qty FROM {$this->tItems} WHERE order_id=%d", $order_id),
+            ARRAY_A
+        );
+
+        foreach ($items as $it) {
+            $variant_id = (int)$it['variant_id'];
+            $qty = (int)$it['qty'];
+
+            $sqlRelease = "
+                UPDATE {$this->tVariants}
+                SET stock_reserved = GREATEST(stock_reserved - %d, 0)
+                WHERE id = %d
+            ";
+            $this->db->query($this->db->prepare($sqlRelease, $qty, $variant_id));
         }
     }
 
