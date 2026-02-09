@@ -1,19 +1,36 @@
 <?php
+
 namespace WPSSC;
+
+use WPSSC\Frontend\Shortcodes\ReserveFormShortcode;
+use WPSSC\Frontend\Shortcodes\ReservationPageShortcode;
 
 if (!defined('ABSPATH')) { exit; }
 
-final class Plugin {
+final class Plugin
+{
     private static ?Plugin $instance = null;
 
-    public static function instance(): Plugin {
+    public static function instance(): Plugin
+    {
         if (self::$instance === null) self::$instance = new self();
         return self::$instance;
     }
 
-    public function init(): void {
+    public function init(): void
+    {
         if (is_admin() && class_exists('\\WPSSC\\Admin\\Admin')) {
             (new \WPSSC\Admin\Admin())->init();
+        }
+
+        if (!is_admin()) {
+            add_shortcode('wpssc_reserve', function ($atts = []) {
+                return (new ReserveFormShortcode())->render($atts);
+            });
+
+            add_shortcode('wpssc_reservation', function ($atts = []) {
+                return (new ReservationPageShortcode())->render($atts);
+            });
         }
     }
 }
