@@ -28,6 +28,11 @@ register_activation_hook(__FILE__, function () {
     if (class_exists('\WPSSC\Migrations\StockMovementsMigration')) {
         \WPSSC\Migrations\StockMovementsMigration::install();
     }
+
+    if (class_exists('\WPSSC\Migrations\ReservationsMigration')) {
+        \WPSSC\Migrations\ReservationsMigration::install();
+    }
+
 });
 
 register_deactivation_hook(__FILE__, function () {
