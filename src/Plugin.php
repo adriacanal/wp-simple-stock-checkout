@@ -2,8 +2,9 @@
 
 namespace WPSSC;
 
-use WPSSC\Frontend\Shortcodes\ReserveFormShortcode;
 use WPSSC\Frontend\Shortcodes\ReservationPageShortcode;
+use WPSSC\Frontend\Shortcodes\ReserveFormShortcode;
+use WPSSC\Cron\Cron;
 
 if (!defined('ABSPATH')) { exit; }
 
@@ -19,6 +20,11 @@ final class Plugin
 
     public function init(): void
     {
+
+        if (class_exists('\WPSSC\Cron\Cron')) {
+            Cron::init();
+        }
+
         if (is_admin() && class_exists('\\WPSSC\\Admin\\Admin')) {
             (new \WPSSC\Admin\Admin())->init();
         }

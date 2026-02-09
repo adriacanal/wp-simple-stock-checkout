@@ -210,4 +210,93 @@ final class ReservationRepository
     {
         return (bool) preg_match('/^[a-f0-9\-]{36}$/i', $token);
     }
+
+    public function find_expired_reserved_order_ids(int $limit = 50): array
+    {
+        $limit = max(1, min(500, (int)$limit));
+
+        // reserved_until està en UTC; comparem amb UTC_TIMESTAMP()
+        $sql = "
+            SELECT id
+            FROM {$this->tOrders}
+            WHERE status = %s
+            AND reserved_until < UTC_TIMESTAMP()
+            ORDER BY reserved_until ASC, id ASC
+            LIMIT %d
+        ";
+
+        $rows = (array) $this->db->get_col(
+            $this->db->prepare($sql, self::STATUS_RESERVED, $limit)
+        );
+
+        return array_map('intval', $rows);
+    }
+
+    public function expire_order_by_id(int $order_id): bool
+    {
+        $order_id = (int)$order_id;
+        if ($order_id < 1) return false;
+
+        $this->db->query('START TRANSACTION');
+
+        try {
+            // Lock de l’ordre per evitar dobles expiracions
+            $order = $this->db->get_row(
+                $this->db->prepare("SELECT * FROM {$this->tOrders} WHERE id=%d LIMIT 1 FOR UPDATE", $order_id),
+                ARRAY_A
+            );
+
+            if (!$order) {
+                $this->db->query('ROLLBACK');
+                return false;
+            }
+
+            // Només expirem si encara està reserved i ja ha caducat
+            if ((string)$order['status'] !== self::STATUS_RESERVED) {
+                $this->db->query('ROLLBACK');
+                return false;
+            }
+
+            // reserved_until UTC vs ara UTC
+            $now = gmdate('Y-m-d H:i:s');
+            if ($now <= (string)$order['reserved_until']) {
+                $this->db->query('ROLLBACK');
+                return false;
+            }
+
+            // Alliberem stock_reserved per cada item
+            $items = (array) $this->db->get_results(
+                $this->db->prepare("SELECT variant_id, qty FROM {$this->tItems} WHERE order_id=%d", $order_id),
+                ARRAY_A
+            );
+
+            foreach ($items as $it) {
+                $variant_id = (int)$it['variant_id'];
+                $qty = (int)$it['qty'];
+
+                $sqlRelease = "
+                    UPDATE {$this->tVariants}
+                    SET stock_reserved = GREATEST(stock_reserved - %d, 0)
+                    WHERE id = %d
+                ";
+                $this->db->query($this->db->prepare($sqlRelease, $qty, $variant_id));
+            }
+
+            // Marquem expired
+            $this->db->update(
+                $this->tOrders,
+                ['status' => self::STATUS_EXPIRED],
+                ['id' => $order_id],
+                ['%s'],
+                ['%d']
+            );
+
+            $this->db->query('COMMIT');
+            return true;
+
+        } catch (\Throwable $e) {
+            $this->db->query('ROLLBACK');
+            throw $e;
+        }
+    }
 }
