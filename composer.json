@@ -1,9 +1,0 @@
-{
-    "name": "adriacanal/wp-simple-stock-checkout",
-    "type": "wordpress-plugin",
-    "autoload": {
-        "psr-4": {
-            "WPSSC\\": "src/"
-        }
-    }
-}

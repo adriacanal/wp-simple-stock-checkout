@@ -15,7 +15,21 @@ define('WPSSC_PLUGIN_FILE', __FILE__);
 define('WPSSC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WPSSC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-require_once WPSSC_PLUGIN_DIR . 'vendor/autoload.php';
+spl_autoload_register(function ($class) {
+
+    if (strpos($class, 'WPSSC\\') !== 0) {
+        return;
+    }
+
+    $base_dir = WPSSC_PLUGIN_DIR . 'src/';
+
+    $relative_class = substr($class, strlen('WPSSC\\'));
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    if (file_exists($file)) {
+        require $file;
+    }
+});
 
 add_action('plugins_loaded', function () {
     \WPSSC\Plugin::instance()->init();
