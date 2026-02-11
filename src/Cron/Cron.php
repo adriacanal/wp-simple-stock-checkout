@@ -26,7 +26,7 @@ final class Cron
         if (!isset($schedules[self::SCHEDULE_KEY])) {
             $schedules[self::SCHEDULE_KEY] = [
                 'interval' => 5 * MINUTE_IN_SECONDS,
-                'display'  => __('Every 5 minutes (WPSSC)', 'wp-simple-stock-checkout'),
+                'display' => 'Every 5 minutes (WPSSC)',
             ];
         }
         return $schedules;
