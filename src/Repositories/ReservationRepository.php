@@ -244,4 +244,96 @@ final class ReservationRepository
     {
         return (bool) preg_match('/^[a-f0-9\-]{36}$/i', $token);
     }
+
+    /**
+     * Marca una ordre com a pagada fent matching per token.
+     * Retorna un status string per a la conciliació:
+     * - ok_paid
+     * - already_paid
+     * - not_found
+     * - expired_needs_review
+     * - not_reserved
+     */
+    public function mark_paid_by_token(string $token): string
+    {
+        $token = strtolower(trim($token));
+        if (!$this->is_valid_token($token)) return 'not_found';
+
+        $this->db->query('START TRANSACTION');
+
+        try {
+            $order = $this->db->get_row(
+                $this->db->prepare("SELECT * FROM {$this->tOrders} WHERE token=%s LIMIT 1 FOR UPDATE", $token),
+                ARRAY_A
+            );
+
+            if (!$order) {
+                $this->db->query('ROLLBACK');
+                return 'not_found';
+            }
+
+            $status = (string)$order['status'];
+
+            if ($status === self::STATUS_PAID) {
+                $this->db->query('ROLLBACK');
+                return 'already_paid';
+            }
+
+            // Per defecte NO convertim expirades a paid automàticament (requereix revisió)
+            if ($status === self::STATUS_EXPIRED) {
+                $this->db->query('ROLLBACK');
+                return 'expired_needs_review';
+            }
+
+            if ($status !== self::STATUS_RESERVED) {
+                $this->db->query('ROLLBACK');
+                return 'not_reserved';
+            }
+
+            $order_id = (int)$order['id'];
+
+            // Mou estoc: reserved -> sold
+            $items = (array) $this->db->get_results(
+                $this->db->prepare("SELECT variant_id, qty FROM {$this->tItems} WHERE order_id=%d", $order_id),
+                ARRAY_A
+            );
+
+            foreach ($items as $it) {
+                $variant_id = (int)$it['variant_id'];
+                $qty = (int)$it['qty'];
+
+                // allibera reserved
+                $sql1 = "
+                    UPDATE {$this->tVariants}
+                    SET stock_reserved = GREATEST(stock_reserved - %d, 0)
+                    WHERE id = %d
+                ";
+                $this->db->query($this->db->prepare($sql1, $qty, $variant_id));
+
+                // incrementa sold
+                $sql2 = "
+                    UPDATE {$this->tVariants}
+                    SET stock_sold = stock_sold + %d
+                    WHERE id = %d
+                ";
+                $this->db->query($this->db->prepare($sql2, $qty, $variant_id));
+            }
+
+            $this->db->update(
+                $this->tOrders,
+                ['status' => self::STATUS_PAID],
+                ['id' => $order_id],
+                ['%s'],
+                ['%d']
+            );
+
+            $this->db->query('COMMIT');
+            return 'ok_paid';
+
+        } catch (\Throwable $e) {
+            $this->db->query('ROLLBACK');
+            throw $e;
+        }
+    }
+
 }
