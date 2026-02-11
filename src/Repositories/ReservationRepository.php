@@ -34,9 +34,9 @@ final class ReservationRepository
         $qty = (int)$qty;
         $email = strtolower(trim($email));
 
-        if ($variant_id < 1) throw new \InvalidArgumentException('Invalid variant.');
-        if ($qty < 1) throw new \InvalidArgumentException('Invalid quantity.');
-        if (!is_email($email)) throw new \InvalidArgumentException('Invalid email.');
+        if ($variant_id < 1) throw new \InvalidArgumentException(__('Invalid variant.', 'wp-simple-stock-checkout'));
+        if ($qty < 1) throw new \InvalidArgumentException(__('Invalid quantity.', 'wp-simple-stock-checkout'));
+        if (!is_email($email)) throw new \InvalidArgumentException(__('Invalid email.', 'wp-simple-stock-checkout'));
 
         $ttl_minutes = max(1, min(1440, (int)$ttl_minutes));
         $now = gmdate('Y-m-d H:i:s');
@@ -60,8 +60,8 @@ final class ReservationRepository
                 $exists = (int)$this->db->get_var(
                     $this->db->prepare("SELECT COUNT(*) FROM {$this->tVariants} WHERE id=%d", $variant_id)
                 );
-                if ($exists === 0) throw new \RuntimeException('Variant not found.');
-                throw new \RuntimeException('Not enough stock available.');
+                if ($exists === 0) throw new \RuntimeException(__('Variant not found.', 'wp-simple-stock-checkout'));
+                throw new \RuntimeException(__('Not enough stock available.', 'wp-simple-stock-checkout'));
             }
 
             $inserted = $this->db->insert(
@@ -79,7 +79,7 @@ final class ReservationRepository
             );
 
             if ($inserted !== 1) {
-                throw new \RuntimeException('Failed to create order.');
+                throw new \RuntimeException(__('Failed to create order.', 'wp-simple-stock-checkout'));
             }
 
             $order_id = (int)$this->db->insert_id;
@@ -100,7 +100,7 @@ final class ReservationRepository
             );
 
             if ($itemInserted !== 1) {
-                throw new \RuntimeException('Failed to create order item.');
+                throw new \RuntimeException(__('Failed to create order item.', 'wp-simple-stock-checkout'));
             }
 
             $this->db->query('COMMIT');

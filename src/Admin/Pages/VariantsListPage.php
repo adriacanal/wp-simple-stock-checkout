@@ -12,14 +12,14 @@ final class VariantsListPage {
 
     public function render(): void {
         if (!current_user_can(Capabilities::CAP_MANAGE)) {
-            wp_die('Not authorized');
+            wp_die(__('Not authorized', 'wp-simple-stock-checkout'));
         }
 
         $table = new VariantsListTable();
         $table->prepare_items();
         ?>
         <div class="wrap">
-            <h1>Variants</h1>
+            <h1><?php echo esc_html__('Variants', 'wp-simple-stock-checkout'); ?></h1>
             <?php $table->display(); ?>
         </div>
         <?php

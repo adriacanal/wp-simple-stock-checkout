@@ -30,11 +30,11 @@ final class StockMovementRepository
     public function create_and_apply(StockMovement $m): int
     {
         if ($m->qty === 0) {
-            throw new \InvalidArgumentException('Quantity cannot be 0.');
+            throw new \InvalidArgumentException(__('Quantity cannot be 0.', 'wp-simple-stock-checkout'));
         }
 
         if (!in_array($m->movement_type, [StockMovement::TYPE_MANUAL_SALE, StockMovement::TYPE_ADJUSTMENT], true)) {
-            throw new \InvalidArgumentException('Invalid movement type.');
+            throw new \InvalidArgumentException(__('Invalid movement type.', 'wp-simple-stock-checkout'));
         }
 
         // Transacció (InnoDB): aplica estoc + log atòmic
@@ -58,7 +58,7 @@ final class StockMovementRepository
             );
 
             if ($inserted !== 1) {
-                throw new \RuntimeException('Failed to insert movement log.');
+                throw new \RuntimeException(__('Failed to insert movement log.', 'wp-simple-stock-checkout'));
             }
 
             $id = (int) $this->db->insert_id;
@@ -85,7 +85,7 @@ final class StockMovementRepository
 
         if ($m->movement_type === StockMovement::TYPE_MANUAL_SALE) {
             if ($m->qty < 1) {
-                throw new \InvalidArgumentException('Manual sale qty must be > 0.');
+                throw new \InvalidArgumentException(__('Manual sale qty must be > 0.', 'wp-simple-stock-checkout'));
             }
 
             $sql = "
@@ -101,9 +101,9 @@ final class StockMovementRepository
                     $this->db->prepare("SELECT COUNT(*) FROM {$t} WHERE {$idF}=%d", $m->variant_id)
                 );
                 if ($exists === 0) {
-                    throw new \RuntimeException('Variant not found.');
+                    throw new \RuntimeException(__('Variant not found.', 'wp-simple-stock-checkout'));
                 }
-                throw new \RuntimeException('Not enough stock available.');
+                throw new \RuntimeException(__('Not enough stock available.', 'wp-simple-stock-checkout'));
             }
             return;
         }
@@ -122,14 +122,14 @@ final class StockMovementRepository
                     $this->db->prepare("SELECT COUNT(*) FROM {$t} WHERE {$idF}=%d", $m->variant_id)
                 );
                 if ($exists === 0) {
-                    throw new \RuntimeException('Variant not found.');
+                    throw new \RuntimeException(__('Variant not found.', 'wp-simple-stock-checkout'));
                 }
-                throw new \RuntimeException('Invalid adjustment: stock_total would be < stock_sold.');
+                throw new \RuntimeException(__('Invalid adjustment: stock_total would be < stock_sold.', 'wp-simple-stock-checkout'));
             }
             return;
         }
 
-        throw new \RuntimeException('Unhandled movement type.');
+        throw new \RuntimeException(__('Unhandled movement type.', 'wp-simple-stock-checkout'));
     }
 
     public function list(array $filters, int $page, int $per_page): array

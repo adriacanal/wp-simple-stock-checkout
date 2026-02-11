@@ -32,8 +32,8 @@ final class AdminMenu {
         $movementsNewPage  = new StockMovementsPage();
 
         add_menu_page(
-            'WP Simple Stock Checkout',
-            'Stock Checkout',
+            __('WP Simple Stock Checkout', 'wp-simple-stock-checkout'), // Page title
+            __('Stock Checkout', 'wp-simple-stock-checkout'), // Menu title
             Capabilities::CAP_MANAGE,
             'wpssc',
             [$variantsPage, 'render'],
@@ -43,8 +43,8 @@ final class AdminMenu {
 
         add_submenu_page(
             'wpssc',
-            'Variants',
-            'Variants',
+            __('Variants', 'wp-simple-stock-checkout'),
+            __('Variants', 'wp-simple-stock-checkout'),
             Capabilities::CAP_MANAGE,
             VariantsListPage::PAGE_SLUG,
             [$variantsPage, 'render']
@@ -52,8 +52,8 @@ final class AdminMenu {
 
         add_submenu_page(
             'wpssc',
-            'Import Variants',
-            'Import Variants',
+            __('Import Variants', 'wp-simple-stock-checkout'),
+            __('Import Variants', 'wp-simple-stock-checkout'),
             Capabilities::CAP_MANAGE,
             VariantsImportPage::PAGE_SLUG,
             [$importPage, 'render']
@@ -62,8 +62,8 @@ final class AdminMenu {
         // NEW: Stock movements log
         add_submenu_page(
             'wpssc',
-            'Stock movements',
-            'Stock movements',
+            __('Stock movements', 'wp-simple-stock-checkout'),
+            __('Stock movements', 'wp-simple-stock-checkout'),
             Capabilities::CAP_MANAGE,
             StockMovementsListPage::PAGE_SLUG,
             [$movementsListPage, 'render']
@@ -72,8 +72,8 @@ final class AdminMenu {
         // NEW: New movement form
         add_submenu_page(
             'wpssc',
-            'New stock movement',
-            'New movement',
+            __('New stock movement', 'wp-simple-stock-checkout'),
+            __('New movement', 'wp-simple-stock-checkout'),
             Capabilities::CAP_MANAGE,
             StockMovementsPage::PAGE_SLUG,
             [$movementsNewPage, 'render']
@@ -81,8 +81,8 @@ final class AdminMenu {
 
         add_submenu_page(
             'wpssc',
-            'Payment reconciliation',
-            'Payment reconciliation',
+            __('Payment reconciliation', 'wp-simple-stock-checkout'),
+            __('Payment reconciliation', 'wp-simple-stock-checkout'),
             Capabilities::CAP_MANAGE,
             PaymentReconciliationPage::PAGE_SLUG,
             [$paymentPage, 'render']
@@ -90,8 +90,8 @@ final class AdminMenu {
 
         add_submenu_page(
             'wpssc',
-            'Settings',
-            'Settings',
+            __('Settings', 'wp-simple-stock-checkout'),
+            __('Settings', 'wp-simple-stock-checkout'),
             Capabilities::CAP_MANAGE,
             SettingsPage::PAGE_SLUG,
             [$settingsPage, 'render']

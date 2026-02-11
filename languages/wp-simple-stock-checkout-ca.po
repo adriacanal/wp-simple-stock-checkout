@@ -1,0 +1,526 @@
+# Copyright (C) 2026 Adrià Canal
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Simple Stock Checkout 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/adriacanal/wp-simple-stock-checkout\n"
+"Last-Translator: Adrià Canal <hola@adriacanal.com>\n"
+"Language-Team: Adrià Canal <hola@adriacanal.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-11T23:21:39+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-simple-stock-checkout\n"
+
+#. Plugin Name of the plugin
+#: wp-simple-stock-checkout.php
+#: src/Admin/AdminMenu.php:35
+msgid "WP Simple Stock Checkout"
+msgstr "WP Simple Stock Checkout"
+
+#. Description of the plugin
+#: wp-simple-stock-checkout.php
+msgid "Generic limited-stock & reservation system with external checkout redirection (no WooCommerce)."
+msgstr ""
+
+#. Author of the plugin
+#: wp-simple-stock-checkout.php
+msgid "Adrià Canal"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:36
+msgid "Stock Checkout"
+msgstr "Stock Checkout"
+
+#: src/Admin/AdminMenu.php:46
+#: src/Admin/AdminMenu.php:47
+#: src/Admin/Pages/VariantsListPage.php:22
+msgid "Variants"
+msgstr "Variants"
+
+#: src/Admin/AdminMenu.php:55
+#: src/Admin/AdminMenu.php:56
+msgid "Import Variants"
+msgstr "Importar Variants"
+
+#: src/Admin/AdminMenu.php:65
+#: src/Admin/AdminMenu.php:66
+msgid "Stock movements"
+msgstr "Moviments d'estoc"
+
+#: src/Admin/AdminMenu.php:75
+msgid "New stock movement"
+msgstr "Nou moviment d'estoc"
+
+#: src/Admin/AdminMenu.php:76
+#: src/Admin/Pages/StockMovementsListPage.php:30
+#: src/Admin/Pages/StockMovementsPage.php:43
+msgid "New movement"
+msgstr "Nou moviment"
+
+#: src/Admin/AdminMenu.php:84
+#: src/Admin/AdminMenu.php:85
+msgid "Payment reconciliation"
+msgstr "Conciliació de pagaments"
+
+#: src/Admin/AdminMenu.php:93
+#: src/Admin/AdminMenu.php:94
+#: src/Admin/Pages/SettingsPage.php:34
+msgid "Settings"
+msgstr "Configuració"
+
+#: src/Admin/AdminMenu.php:104
+#: src/Admin/AdminMenu.php:133
+msgid "No tens permisos per fer aquesta acció."
+msgstr "No tens permisos per fer aquesta acció."
+
+#: src/Admin/AdminMenu.php:109
+#: src/Admin/AdminMenu.php:138
+#: src/Admin/Pages/PaymentReconciliationPage.php:31
+msgid "Security check failed (invalid nonce)."
+msgstr "Error de seguretat (nonce invàlid)."
+
+#: src/Admin/AdminMenu.php:116
+msgid "Invalid request."
+msgstr "Petició invàlida."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:21
+#: src/Admin/Pages/SettingsPage.php:17
+#: src/Admin/Pages/StockMovementsListPage.php:16
+#: src/Admin/Pages/StockMovementsPage.php:19
+msgid "No tens permisos per accedir aquí."
+msgstr "No tens permisos per accedir aquí."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:44
+msgid "Payment reconciliation (CSV)"
+msgstr "Conciliació de pagaments (CSV)"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:47
+msgid "Puja un CSV de pagaments. El sistema buscarà el token (UUID) a qualsevol columna i marcarà la comanda com a pagada."
+msgstr "Puja un CSV de pagaments. El sistema buscarà el token (UUID) a qualsevol columna i marcarà la comanda com a pagada."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:61
+#: src/Admin/Pages/VariantsImportPage.php:47
+msgid "CSV file"
+msgstr "Fitxer CSV"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:66
+msgid "El token ha d’aparèixer al CSV (en una columna o dins del concepte/descripció)."
+msgstr "El token ha d’aparèixer al CSV (en una columna o dins del concepte/descripció)."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:72
+msgid "Process CSV"
+msgstr "Processar CSV"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:76
+msgid "Summary"
+msgstr "Resum"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:91
+msgid "Results"
+msgstr "Resultats"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:96
+msgid "Row"
+msgstr "Fila"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:97
+#: src/Admin/Tables/VariantsListTable.php:24
+msgid "Status"
+msgstr "Estat"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:98
+msgid "Token"
+msgstr "Token"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:99
+msgid "Amount"
+msgstr "Import"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:100
+msgid "Message"
+msgstr "Missatge"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:117
+msgid "Nota: les comandes expirades no es marquen com a pagades automàticament (requereixen revisió)."
+msgstr "Nota: les comandes expirades no es marquen com a pagades automàticament (requereixen revisió)."
+
+#: src/Admin/Pages/SettingsPage.php:38
+msgid "Configuració desada correctament."
+msgstr "Configuració desada correctament."
+
+#: src/Admin/Pages/SettingsPage.php:46
+msgid "Reserves"
+msgstr "Reserves"
+
+#: src/Admin/Pages/SettingsPage.php:51
+msgid "Temps de reserva (minuts)"
+msgstr "Temps de reserva (minuts)"
+
+#: src/Admin/Pages/SettingsPage.php:65
+msgid "Temps que l’estoc queda bloquejat mentre la família completa el pagament. Recomanat: 10–20 minuts."
+msgstr "Temps que l’estoc queda bloquejat mentre la família completa el pagament. Recomanat: 10–20 minuts."
+
+#: src/Admin/Pages/SettingsPage.php:71
+msgid "Email obligatori"
+msgstr "Email obligatori"
+
+#: src/Admin/Pages/SettingsPage.php:81
+msgid "Demana email per fer una reserva."
+msgstr "Demana email per fer una reserva."
+
+#: src/Admin/Pages/SettingsPage.php:87
+msgid "Checkout extern"
+msgstr "Checkout extern"
+
+#: src/Admin/Pages/SettingsPage.php:89
+msgid "URL del sistema de pagament extern. El plugin hi afegirà el token com a paràmetre (?token=...)."
+msgstr "URL del sistema de pagament extern. El plugin hi afegirà el token com a paràmetre (?token=...)."
+
+#: src/Admin/Pages/SettingsPage.php:95
+msgid "Checkout URL (infantil)"
+msgstr "Checkout URL (infantil)"
+
+#: src/Admin/Pages/SettingsPage.php:112
+msgid "Checkout URL (adult)"
+msgstr "Checkout URL (adult)"
+
+#: src/Admin/Pages/SettingsPage.php:128
+msgid "Desar configuració"
+msgstr "Desar configuració"
+
+#: src/Admin/Pages/StockMovementsListPage.php:26
+msgid "Stock movements log"
+msgstr "Registre de moviments d'estoc"
+
+#: src/Admin/Pages/StockMovementsListPage.php:38
+msgid "Search (variant id)"
+msgstr "Cercar (ID variant)"
+
+#: src/Admin/Pages/StockMovementsPage.php:25
+msgid "Movement saved"
+msgstr "Moviment desat"
+
+#: src/Admin/Pages/StockMovementsPage.php:39
+msgid "Manual sale / Stock movement"
+msgstr "Venda manual / Moviment d'estoc"
+
+#: src/Admin/Pages/StockMovementsPage.php:42
+msgid "View log"
+msgstr "Veure registre"
+
+#: src/Admin/Pages/StockMovementsPage.php:51
+msgid "Variant ID"
+msgstr "ID Variant"
+
+#: src/Admin/Pages/StockMovementsPage.php:54
+msgid "ID de la fila a la taula variants."
+msgstr "ID de la fila a la taula variants."
+
+#: src/Admin/Pages/StockMovementsPage.php:59
+msgid "Movement type"
+msgstr "Tipus de moviment"
+
+#: src/Admin/Pages/StockMovementsPage.php:63
+msgid "Manual sale (parada) → stock_sold + qty"
+msgstr "Venda manual (parada) → stock_sold + qty"
+
+#: src/Admin/Pages/StockMovementsPage.php:66
+msgid "Adjustment → stock_total +/- qty"
+msgstr "Ajust → stock_total +/- qty"
+
+#: src/Admin/Pages/StockMovementsPage.php:73
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:81
+msgid "Quantity"
+msgstr "Quantitat"
+
+#: src/Admin/Pages/StockMovementsPage.php:77
+msgid "Manual sale: qty > 0. Adjustment: pot ser + o -."
+msgstr "Venda manual: qty > 0. Ajust: pot ser + o -."
+
+#: src/Admin/Pages/StockMovementsPage.php:83
+#: src/Admin/Tables/StockMovementsListTable.php:36
+msgid "Note"
+msgstr "Nota"
+
+#: src/Admin/Pages/StockMovementsPage.php:90
+msgid "Save movement"
+msgstr "Desar moviment"
+
+#: src/Admin/Pages/StockMovementsPage.php:99
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:111
+msgid "Security check failed."
+msgstr "Error de seguretat."
+
+#: src/Admin/Pages/StockMovementsPage.php:107
+msgid "Invalid variant ID."
+msgstr "ID de variant invàlid."
+
+#: src/Admin/Pages/StockMovementsPage.php:108
+#: src/Repositories/StockMovementRepository.php:33
+msgid "Quantity cannot be 0."
+msgstr "La quantitat no pot ser 0."
+
+#: src/Admin/Pages/VariantsImportPage.php:19
+#: src/Admin/Pages/VariantsImportPage.php:59
+#: src/Admin/Pages/VariantsListPage.php:15
+msgid "Not authorized"
+msgstr "No autoritzat"
+
+#: src/Admin/Pages/VariantsImportPage.php:26
+msgid "Import Variants (CSV)"
+msgstr "Importar Variants (CSV)"
+
+#: src/Admin/Pages/VariantsImportPage.php:30
+msgid "%d variants imported."
+msgstr "%d variants importades."
+
+#: src/Admin/Pages/VariantsImportPage.php:34
+msgid "No variants were imported."
+msgstr "No s'han importat variants."
+
+#: src/Admin/Pages/VariantsImportPage.php:38
+msgid "Expected header:"
+msgstr "Capçalera esperada:"
+
+#: src/Admin/Pages/VariantsImportPage.php:52
+msgid "Import"
+msgstr "Importar"
+
+#: src/Admin/Pages/VariantsImportPage.php:63
+msgid "Upload failed."
+msgstr "Pujada fallida."
+
+#: src/Admin/Pages/VariantsImportPage.php:68
+msgid "Cannot read uploaded file."
+msgstr "No es pot llegir el fitxer pujat."
+
+#: src/Admin/Pages/VariantsImportPage.php:71
+msgid "Empty CSV."
+msgstr "CSV buit."
+
+#: src/Admin/Pages/VariantsImportPage.php:77
+msgid "Invalid header. Expected: %s"
+msgstr "Capçalera invàlida. Esperat: %s"
+
+#: src/Admin/Pages/VariantsImportPage.php:92
+msgid "Invalid column count on line %d."
+msgstr "Recompte de columnes invàlid a la línia %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:98
+msgid "Missing sku on line %d."
+msgstr "SKU faltant a la línia %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:99
+msgid "Invalid price on line %d."
+msgstr "Preu invàlid a la línia %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:100
+msgid "Invalid stock_total on line %d."
+msgstr "Estoc total invàlid a la línia %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:101
+msgid "Invalid is_active on line %d."
+msgstr "is_active invàlid a la línia %d."
+
+#: src/Admin/Tables/StockMovementsListTable.php:32
+msgid "Date"
+msgstr "Data"
+
+#: src/Admin/Tables/StockMovementsListTable.php:33
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:56
+msgid "Variant"
+msgstr "Variant"
+
+#: src/Admin/Tables/StockMovementsListTable.php:34
+msgid "Type"
+msgstr "Tipus"
+
+#: src/Admin/Tables/StockMovementsListTable.php:35
+msgid "Qty"
+msgstr "Qt."
+
+#: src/Admin/Tables/StockMovementsListTable.php:37
+msgid "User"
+msgstr "Usuari"
+
+#: src/Admin/Tables/VariantsListTable.php:18
+msgid "SKU"
+msgstr "SKU"
+
+#: src/Admin/Tables/VariantsListTable.php:19
+msgid "Model"
+msgstr "Model"
+
+#: src/Admin/Tables/VariantsListTable.php:20
+msgid "Color"
+msgstr "Color"
+
+#: src/Admin/Tables/VariantsListTable.php:21
+msgid "Size"
+msgstr "Mida"
+
+#: src/Admin/Tables/VariantsListTable.php:22
+msgid "Price"
+msgstr "Preu"
+
+#: src/Admin/Tables/VariantsListTable.php:23
+msgid "Stock total"
+msgstr "Estoc total"
+
+#: src/Admin/Tables/VariantsListTable.php:68
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: src/Admin/Tables/VariantsListTable.php:68
+msgid "Activate"
+msgstr "Activar"
+
+#: src/Admin/Tables/VariantsListTable.php:92
+msgid "Active"
+msgstr "Actiu"
+
+#: src/Admin/Tables/VariantsListTable.php:93
+msgid "Inactive"
+msgstr "Inactiu"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:17
+msgid "Missing token."
+msgstr "Falta el token."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:31
+msgid "Order not found."
+msgstr "Comanda no trobada."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:59
+msgid "Reservation"
+msgstr "Reserva"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:61
+msgid "Status:"
+msgstr "Estat:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:65
+msgid "Reserved until:"
+msgstr "Reservat fins:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:71
+msgid "Order summary"
+msgstr "Resum de la comanda"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:74
+msgid "Quantity:"
+msgstr "Quantitat:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:76
+msgid "Unit price:"
+msgstr "Preu unitari:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:85
+msgid "Proceed to payment"
+msgstr "Procedir al pagament"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:89
+msgid "You will be redirected to the external checkout."
+msgstr "Seràs redirigit al pagament extern."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:93
+msgid "Checkout URL is not configured. Please contact the AFA."
+msgstr "La URL de pagament no està configurada. Contacta amb l'AFA."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:98
+msgid "This reservation has expired. Please start again."
+msgstr "Aquesta reserva ha expirat. Si us plau, torna a començar."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:102
+msgid "Payment confirmed. Thank you!"
+msgstr "Pagament confirmat. Gràcies!"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:106
+msgid "This order is not available for payment."
+msgstr "Aquesta comanda no està disponible per al pagament."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:58
+msgid "Choose…"
+msgstr "Tria…"
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:89
+msgid "Email"
+msgstr "Email"
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:99
+msgid "Reserve"
+msgstr "Reservar"
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:116
+msgid "Too many attempts. Please try again in a few minutes."
+msgstr "Massa intents. Torna-ho a provar en uns minuts."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:126
+#: src/Repositories/ReservationRepository.php:37
+msgid "Invalid variant."
+msgstr "Variant invàlida."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:127
+#: src/Repositories/ReservationRepository.php:38
+msgid "Invalid quantity."
+msgstr "Quantitat invàlida."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:130
+#: src/Repositories/ReservationRepository.php:39
+msgid "Invalid email."
+msgstr "Email invàlid."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:141
+#: src/Repositories/ReservationRepository.php:63
+#: src/Repositories/StockMovementRepository.php:104
+#: src/Repositories/StockMovementRepository.php:125
+msgid "Variant not found."
+msgstr "Variant no trobada."
+
+#: src/Repositories/ReservationRepository.php:64
+#: src/Repositories/StockMovementRepository.php:106
+msgid "Not enough stock available."
+msgstr "No hi ha prou estoc disponible."
+
+#: src/Repositories/ReservationRepository.php:82
+msgid "Failed to create order."
+msgstr "Ha fallat la creació de la comanda."
+
+#: src/Repositories/ReservationRepository.php:103
+msgid "Failed to create order item."
+msgstr "Ha fallat la creació de l'element de la comanda."
+
+#: src/Repositories/StockMovementRepository.php:37
+msgid "Invalid movement type."
+msgstr "Tipus de moviment invàlid."
+
+#: src/Repositories/StockMovementRepository.php:61
+msgid "Failed to insert movement log."
+msgstr "Ha fallat la inserció del registre de moviment."
+
+#: src/Repositories/StockMovementRepository.php:88
+msgid "Manual sale qty must be > 0."
+msgstr "La quantitat de venda manual ha de ser > 0."
+
+#: src/Repositories/StockMovementRepository.php:127
+msgid "Invalid adjustment: stock_total would be < stock_sold."
+msgstr "Ajust invàlid: l'estoc total seria < estoc venut."
+
+#: src/Repositories/StockMovementRepository.php:132
+msgid "Unhandled movement type."
+msgstr "Tipus de moviment no gestionat."
+
+#: src/Services/PaymentReconciliationService.php:37
+msgid "No token detected"
+msgstr "No s'ha detectat cap token"
+
+#: src/Services/PaymentReconciliationService.php:42
+msgid "Multiple tokens detected in same row"
+msgstr "Múltiples tokens detectats a la mateixa fila"
+
+#: src/Services/PaymentReconciliationService.php:50
+msgid "Token repeated in CSV"
+msgstr "Token repetit al CSV"

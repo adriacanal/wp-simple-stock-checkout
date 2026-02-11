@@ -34,12 +34,12 @@ final class PaymentReconciliationService
             $amount = $row['amount'] ?? null;
 
             if (count($tokens) === 0) {
-                $results[] = $this->res($rowNo, 'no_token', null, $amount, 'No token detected');
+                $results[] = $this->res($rowNo, 'no_token', null, $amount, __('No token detected', 'wp-simple-stock-checkout'));
                 continue;
             }
 
             if (count($tokens) > 1) {
-                $results[] = $this->res($rowNo, 'ambiguous_token', null, $amount, 'Multiple tokens detected in same row');
+                $results[] = $this->res($rowNo, 'ambiguous_token', null, $amount, __('Multiple tokens detected in same row', 'wp-simple-stock-checkout'));
                 continue;
             }
 
@@ -47,7 +47,7 @@ final class PaymentReconciliationService
 
             // Idempotència per CSV amb tokens repetits
             if (isset($seenTokens[$token])) {
-                $results[] = $this->res($rowNo, 'duplicate_in_csv', $token, $amount, 'Token repeated in CSV');
+                $results[] = $this->res($rowNo, 'duplicate_in_csv', $token, $amount, __('Token repeated in CSV', 'wp-simple-stock-checkout'));
                 continue;
             }
             $seenTokens[$token] = true;
