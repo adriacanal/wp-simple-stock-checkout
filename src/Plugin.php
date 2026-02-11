@@ -21,6 +21,14 @@ final class Plugin
     public function init(): void
     {
 
+        add_action('init', function () {
+            load_plugin_textdomain(
+                'wp-simple-stock-checkout',
+                false,
+                dirname(plugin_basename(WPSSC_PLUGIN_FILE)) . '/languages'
+            );
+        });
+
         if (class_exists('\WPSSC\Cron\Cron')) {
             Cron::init();
         }
