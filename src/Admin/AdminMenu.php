@@ -1,12 +1,15 @@
 <?php
 namespace WPSSC\Admin;
 
+use WPSSC\Admin\Pages\PaymentReconciliationPage;
 use WPSSC\Admin\Pages\StockMovementsListPage;
 use WPSSC\Admin\Pages\StockMovementsPage;
 use WPSSC\Admin\Pages\VariantsImportPage;
+use WPSSC\Repositories\VariantRepository;
 use WPSSC\Admin\Pages\VariantsListPage;
 use WPSSC\Admin\Pages\SettingsPage;
 use WPSSC\Security\Capabilities;
+use WPSSC\Settings\Settings;
 
 if (!defined('ABSPATH')) { exit; }
 
@@ -15,6 +18,7 @@ final class AdminMenu {
     public function init(): void {
         add_action('admin_menu', [$this, 'register_menu']);
         add_action('admin_post_wpssc_save_settings', [$this, 'save_settings']);
+        add_action('admin_post_wpssc_toggle_variant', [$this, 'toggle_variant']);
     }
 
     public function register_menu(): void {
@@ -94,6 +98,35 @@ final class AdminMenu {
         );
     }
 
+    public function toggle_variant(): void
+    {
+        if (!current_user_can(Capabilities::CAP_MANAGE)) {
+            wp_die(__('No tens permisos per fer aquesta acció.', 'wp-simple-stock-checkout'));
+        }
+
+        $nonce = isset($_GET['_wpssc_nonce']) ? (string)$_GET['_wpssc_nonce'] : '';
+        if (!$nonce || !wp_verify_nonce($nonce, 'wpssc_toggle_variant')) {
+            wp_die(__('Security check failed (invalid nonce).', 'wp-simple-stock-checkout'));
+        }
+
+        $variant_id = isset($_GET['variant_id']) ? (int)$_GET['variant_id'] : 0;
+        $to = isset($_GET['to']) ? (string)$_GET['to'] : '';
+
+        if ($variant_id < 1 || !in_array($to, ['0','1'], true)) {
+            wp_die(__('Invalid request.', 'wp-simple-stock-checkout'));
+        }
+
+        $repo = new VariantRepository();
+        $repo->set_active($variant_id, $to === '1');
+
+        $redirect = admin_url('admin.php?page=' . VariantsListPage::PAGE_SLUG);
+        $redirect = add_query_arg('updated', '1', $redirect);
+
+        wp_safe_redirect($redirect);
+        exit;
+    }
+
+
     public function save_settings(): void
     {
         if (!current_user_can(Capabilities::CAP_MANAGE)) {
@@ -151,7 +184,7 @@ final class AdminMenu {
         }
 
         // Conserva claus existents que no estiguin al formulari (per no “esborrar” config antiga)
-        $existing = \WPSSC\Settings\Settings::all();
+        $existing = Settings::all();
         $merged = array_merge($existing, $clean);
 
         update_option('wpssc_settings', $merged, false);

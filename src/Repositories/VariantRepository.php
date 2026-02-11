@@ -36,4 +36,21 @@ final class VariantRepository {
             $wpdb->insert($t, $data, $formats);
         }
     }
+
+    public function set_active(int $variant_id, bool $is_active): bool
+    {
+        global $wpdb;
+        $t = DB::table('variants');
+
+        $updated = $wpdb->update(
+            $t,
+            ['is_active' => $is_active ? 1 : 0],
+            ['id' => (int)$variant_id],
+            ['%d'],
+            ['%d']
+        );
+
+        return $updated === 1;
+    }
+
 }
