@@ -20,6 +20,7 @@ final class AdminMenu {
     public function register_menu(): void {
         $variantsPage = new VariantsListPage();
         $importPage   = new VariantsImportPage();
+        $paymentPage  = new PaymentReconciliationPage();
         $settingsPage = new SettingsPage();
 
         // NEW: Stock Movements pages
@@ -72,6 +73,15 @@ final class AdminMenu {
             Capabilities::CAP_MANAGE,
             StockMovementsPage::PAGE_SLUG,
             [$movementsNewPage, 'render']
+        );
+
+        add_submenu_page(
+            'wpssc',
+            'Payment reconciliation',
+            'Payment reconciliation',
+            Capabilities::CAP_MANAGE,
+            PaymentReconciliationPage::PAGE_SLUG,
+            [$paymentPage, 'render']
         );
 
         add_submenu_page(
