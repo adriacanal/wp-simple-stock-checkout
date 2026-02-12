@@ -1,0 +1,526 @@
+# Copyright (C) 2026 Adrià Canal
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Simple Stock Checkout 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/adriacanal/wp-simple-stock-checkout\n"
+"Last-Translator: Adrià Canal <hola@adriacanal.com>\n"
+"Language-Team: Adrià Canal <hola@adriacanal.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-11T23:21:39+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-simple-stock-checkout\n"
+
+#. Plugin Name of the plugin
+#: wp-simple-stock-checkout.php
+#: src/Admin/AdminMenu.php:35
+msgid "WP Simple Stock Checkout"
+msgstr "WP Simple Stock Checkout"
+
+#. Description of the plugin
+#: wp-simple-stock-checkout.php
+msgid "Generic limited-stock & reservation system with external checkout redirection (no WooCommerce)."
+msgstr ""
+
+#. Author of the plugin
+#: wp-simple-stock-checkout.php
+msgid "Adrià Canal"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:36
+msgid "Stock Checkout"
+msgstr "Stock Checkout"
+
+#: src/Admin/AdminMenu.php:46
+#: src/Admin/AdminMenu.php:47
+#: src/Admin/Pages/VariantsListPage.php:22
+msgid "Variants"
+msgstr "Variantes"
+
+#: src/Admin/AdminMenu.php:55
+#: src/Admin/AdminMenu.php:56
+msgid "Import Variants"
+msgstr "Importar Variantes"
+
+#: src/Admin/AdminMenu.php:65
+#: src/Admin/AdminMenu.php:66
+msgid "Stock movements"
+msgstr "Movimientos de stock"
+
+#: src/Admin/AdminMenu.php:75
+msgid "New stock movement"
+msgstr "Nuevo movimiento de stock"
+
+#: src/Admin/AdminMenu.php:76
+#: src/Admin/Pages/StockMovementsListPage.php:30
+#: src/Admin/Pages/StockMovementsPage.php:43
+msgid "New movement"
+msgstr "Nuevo movimiento"
+
+#: src/Admin/AdminMenu.php:84
+#: src/Admin/AdminMenu.php:85
+msgid "Payment reconciliation"
+msgstr "Conciliación de pagos"
+
+#: src/Admin/AdminMenu.php:93
+#: src/Admin/AdminMenu.php:94
+#: src/Admin/Pages/SettingsPage.php:34
+msgid "Settings"
+msgstr "Configuración"
+
+#: src/Admin/AdminMenu.php:104
+#: src/Admin/AdminMenu.php:133
+msgid "No tens permisos per fer aquesta acció."
+msgstr "No tienes permisos para realizar esta acción."
+
+#: src/Admin/AdminMenu.php:109
+#: src/Admin/AdminMenu.php:138
+#: src/Admin/Pages/PaymentReconciliationPage.php:31
+msgid "Security check failed (invalid nonce)."
+msgstr "Error de seguridad (nonce inválido)."
+
+#: src/Admin/AdminMenu.php:116
+msgid "Invalid request."
+msgstr "Petición inválida."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:21
+#: src/Admin/Pages/SettingsPage.php:17
+#: src/Admin/Pages/StockMovementsListPage.php:16
+#: src/Admin/Pages/StockMovementsPage.php:19
+msgid "No tens permisos per accedir aquí."
+msgstr "No tienes permisos para acceder aquí."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:44
+msgid "Payment reconciliation (CSV)"
+msgstr "Conciliación de pagos (CSV)"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:47
+msgid "Puja un CSV de pagaments. El sistema buscarà el token (UUID) a qualsevol columna i marcarà la comanda com a pagada."
+msgstr "Sube un CSV de pagos. El sistema buscará el token (UUID) en cualquier columna y marcará el pedido como pagado."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:61
+#: src/Admin/Pages/VariantsImportPage.php:47
+msgid "CSV file"
+msgstr "Archivo CSV"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:66
+msgid "El token ha d’aparèixer al CSV (en una columna o dins del concepte/descripció)."
+msgstr "El token debe aparecer en el CSV (en una columna o dentro del concepto/descripción)."
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:72
+msgid "Process CSV"
+msgstr "Procesar CSV"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:76
+msgid "Summary"
+msgstr "Resumen"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:91
+msgid "Results"
+msgstr "Resultados"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:96
+msgid "Row"
+msgstr "Fila"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:97
+#: src/Admin/Tables/VariantsListTable.php:24
+msgid "Status"
+msgstr "Estado"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:98
+msgid "Token"
+msgstr "Token"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:99
+msgid "Amount"
+msgstr "Importe"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:100
+msgid "Message"
+msgstr "Mensaje"
+
+#: src/Admin/Pages/PaymentReconciliationPage.php:117
+msgid "Nota: les comandes expirades no es marquen com a pagades automàticament (requereixen revisió)."
+msgstr "Nota: los pedidos expirados no se marcan como pagados automáticamente (requieren revisión)."
+
+#: src/Admin/Pages/SettingsPage.php:38
+msgid "Configuració desada correctament."
+msgstr "Configuración guardada correctamente."
+
+#: src/Admin/Pages/SettingsPage.php:46
+msgid "Reserves"
+msgstr "Reservas"
+
+#: src/Admin/Pages/SettingsPage.php:51
+msgid "Temps de reserva (minuts)"
+msgstr "Tiempo de reserva (minutos)"
+
+#: src/Admin/Pages/SettingsPage.php:65
+msgid "Temps que l’estoc queda bloquejat mentre la família completa el pagament. Recomanat: 10–20 minuts."
+msgstr "Tiempo que el stock queda bloqueado mientras la familia completa el pago. Recomendado: 10–20 minutos."
+
+#: src/Admin/Pages/SettingsPage.php:71
+msgid "Email obligatori"
+msgstr "Email obligatorio"
+
+#: src/Admin/Pages/SettingsPage.php:81
+msgid "Demana email per fer una reserva."
+msgstr "Pide email para hacer una reserva."
+
+#: src/Admin/Pages/SettingsPage.php:87
+msgid "Checkout extern"
+msgstr "Checkout externo"
+
+#: src/Admin/Pages/SettingsPage.php:89
+msgid "URL del sistema de pagament extern. El plugin hi afegirà el token com a paràmetre (?token=...)."
+msgstr "URL del sistema de pago externo. El plugin añadirá el token como parámetro (?token=...)."
+
+#: src/Admin/Pages/SettingsPage.php:95
+msgid "Checkout URL (infantil)"
+msgstr "Checkout URL (infantil)"
+
+#: src/Admin/Pages/SettingsPage.php:112
+msgid "Checkout URL (adult)"
+msgstr "Checkout URL (adult)"
+
+#: src/Admin/Pages/SettingsPage.php:128
+msgid "Desar configuració"
+msgstr "Guardar configuración"
+
+#: src/Admin/Pages/StockMovementsListPage.php:26
+msgid "Stock movements log"
+msgstr "Registro de movimientos de stock"
+
+#: src/Admin/Pages/StockMovementsListPage.php:38
+msgid "Search (variant id)"
+msgstr "Buscar (ID variante)"
+
+#: src/Admin/Pages/StockMovementsPage.php:25
+msgid "Movement saved"
+msgstr "Movimiento guardado"
+
+#: src/Admin/Pages/StockMovementsPage.php:39
+msgid "Manual sale / Stock movement"
+msgstr "Venta manual / Movimiento de stock"
+
+#: src/Admin/Pages/StockMovementsPage.php:42
+msgid "View log"
+msgstr "Ver registro"
+
+#: src/Admin/Pages/StockMovementsPage.php:51
+msgid "Variant ID"
+msgstr "ID Variante"
+
+#: src/Admin/Pages/StockMovementsPage.php:54
+msgid "ID de la fila a la taula variants."
+msgstr "ID de la fila en la tabla variantes."
+
+#: src/Admin/Pages/StockMovementsPage.php:59
+msgid "Movement type"
+msgstr "Tipo de movimiento"
+
+#: src/Admin/Pages/StockMovementsPage.php:63
+msgid "Manual sale (parada) → stock_sold + qty"
+msgstr "Venta manual (parada) → stock_sold + qty"
+
+#: src/Admin/Pages/StockMovementsPage.php:66
+msgid "Adjustment → stock_total +/- qty"
+msgstr "Ajuste → stock_total +/- qty"
+
+#: src/Admin/Pages/StockMovementsPage.php:73
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:81
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: src/Admin/Pages/StockMovementsPage.php:77
+msgid "Manual sale: qty > 0. Adjustment: pot ser + o -."
+msgstr "Venta manual: qty > 0. Ajuste: puede ser + o -."
+
+#: src/Admin/Pages/StockMovementsPage.php:83
+#: src/Admin/Tables/StockMovementsListTable.php:36
+msgid "Note"
+msgstr "Nota"
+
+#: src/Admin/Pages/StockMovementsPage.php:90
+msgid "Save movement"
+msgstr "Guardar movimiento"
+
+#: src/Admin/Pages/StockMovementsPage.php:99
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:111
+msgid "Security check failed."
+msgstr "Error de seguridad."
+
+#: src/Admin/Pages/StockMovementsPage.php:107
+msgid "Invalid variant ID."
+msgstr "ID de variante inválido."
+
+#: src/Admin/Pages/StockMovementsPage.php:108
+#: src/Repositories/StockMovementRepository.php:33
+msgid "Quantity cannot be 0."
+msgstr "La cantidad no puede ser 0."
+
+#: src/Admin/Pages/VariantsImportPage.php:19
+#: src/Admin/Pages/VariantsImportPage.php:59
+#: src/Admin/Pages/VariantsListPage.php:15
+msgid "Not authorized"
+msgstr "No autorizado"
+
+#: src/Admin/Pages/VariantsImportPage.php:26
+msgid "Import Variants (CSV)"
+msgstr "Importar Variantes (CSV)"
+
+#: src/Admin/Pages/VariantsImportPage.php:30
+msgid "%d variants imported."
+msgstr "%d variantes importadas."
+
+#: src/Admin/Pages/VariantsImportPage.php:34
+msgid "No variants were imported."
+msgstr "No se han importado variantes."
+
+#: src/Admin/Pages/VariantsImportPage.php:38
+msgid "Expected header:"
+msgstr "Cabecera esperada:"
+
+#: src/Admin/Pages/VariantsImportPage.php:52
+msgid "Import"
+msgstr "Importar"
+
+#: src/Admin/Pages/VariantsImportPage.php:63
+msgid "Upload failed."
+msgstr "Subida fallida."
+
+#: src/Admin/Pages/VariantsImportPage.php:68
+msgid "Cannot read uploaded file."
+msgstr "No se puede leer el archivo subido."
+
+#: src/Admin/Pages/VariantsImportPage.php:71
+msgid "Empty CSV."
+msgstr "CSV vacío."
+
+#: src/Admin/Pages/VariantsImportPage.php:77
+msgid "Invalid header. Expected: %s"
+msgstr "Cabecera inválida. Esperado: %s"
+
+#: src/Admin/Pages/VariantsImportPage.php:92
+msgid "Invalid column count on line %d."
+msgstr "Recuento de columnas inválido en la línea %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:98
+msgid "Missing sku on line %d."
+msgstr "SKU faltante en la línea %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:99
+msgid "Invalid price on line %d."
+msgstr "Precio inválido en la línea %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:100
+msgid "Invalid stock_total on line %d."
+msgstr "Stock total inválido en la línea %d."
+
+#: src/Admin/Pages/VariantsImportPage.php:101
+msgid "Invalid is_active on line %d."
+msgstr "is_active inválido en la línea %d."
+
+#: src/Admin/Tables/StockMovementsListTable.php:32
+msgid "Date"
+msgstr "Fecha"
+
+#: src/Admin/Tables/StockMovementsListTable.php:33
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:56
+msgid "Variant"
+msgstr "Variante"
+
+#: src/Admin/Tables/StockMovementsListTable.php:34
+msgid "Type"
+msgstr "Tipo"
+
+#: src/Admin/Tables/StockMovementsListTable.php:35
+msgid "Qty"
+msgstr "Cant."
+
+#: src/Admin/Tables/StockMovementsListTable.php:37
+msgid "User"
+msgstr "Usuario"
+
+#: src/Admin/Tables/VariantsListTable.php:18
+msgid "SKU"
+msgstr "SKU"
+
+#: src/Admin/Tables/VariantsListTable.php:19
+msgid "Model"
+msgstr "Modelo"
+
+#: src/Admin/Tables/VariantsListTable.php:20
+msgid "Color"
+msgstr "Color"
+
+#: src/Admin/Tables/VariantsListTable.php:21
+msgid "Size"
+msgstr "Talla"
+
+#: src/Admin/Tables/VariantsListTable.php:22
+msgid "Price"
+msgstr "Precio"
+
+#: src/Admin/Tables/VariantsListTable.php:23
+msgid "Stock total"
+msgstr "Stock total"
+
+#: src/Admin/Tables/VariantsListTable.php:68
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: src/Admin/Tables/VariantsListTable.php:68
+msgid "Activate"
+msgstr "Activar"
+
+#: src/Admin/Tables/VariantsListTable.php:92
+msgid "Active"
+msgstr "Activo"
+
+#: src/Admin/Tables/VariantsListTable.php:93
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:17
+msgid "Missing token."
+msgstr "Falta el token."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:31
+msgid "Order not found."
+msgstr "Pedido no encontrado."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:59
+msgid "Reservation"
+msgstr "Reserva"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:61
+msgid "Status:"
+msgstr "Estado:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:65
+msgid "Reserved until:"
+msgstr "Reservado hasta:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:71
+msgid "Order summary"
+msgstr "Resumen del pedido"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:74
+msgid "Quantity:"
+msgstr "Cantidad:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:76
+msgid "Unit price:"
+msgstr "Precio unitario:"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:85
+msgid "Proceed to payment"
+msgstr "Proceder al pago"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:89
+msgid "You will be redirected to the external checkout."
+msgstr "Serás redirigido al pago externo."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:93
+msgid "Checkout URL is not configured. Please contact the AFA."
+msgstr "La URL de pago no está configurada. Contacta con la AFA."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:98
+msgid "This reservation has expired. Please start again."
+msgstr "Esta reserva ha expirado. Por favor, vuelve a empezar."
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:102
+msgid "Payment confirmed. Thank you!"
+msgstr "Pago confirmado. ¡Gracias!"
+
+#: src/Frontend/Shortcodes/ReservationPageShortcode.php:106
+msgid "This order is not available for payment."
+msgstr "Este pedido no está disponible para el pago."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:58
+msgid "Choose…"
+msgstr "Elige…"
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:89
+msgid "Email"
+msgstr "Email"
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:99
+msgid "Reserve"
+msgstr "Reservar"
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:116
+msgid "Too many attempts. Please try again in a few minutes."
+msgstr "Demasiados intentos. Vuelve a intentarlo en unos minutos."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:126
+#: src/Repositories/ReservationRepository.php:37
+msgid "Invalid variant."
+msgstr "Variante inválida."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:127
+#: src/Repositories/ReservationRepository.php:38
+msgid "Invalid quantity."
+msgstr "Cantidad inválida."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:130
+#: src/Repositories/ReservationRepository.php:39
+msgid "Invalid email."
+msgstr "Email inválido."
+
+#: src/Frontend/Shortcodes/ReserveFormShortcode.php:141
+#: src/Repositories/ReservationRepository.php:63
+#: src/Repositories/StockMovementRepository.php:104
+#: src/Repositories/StockMovementRepository.php:125
+msgid "Variant not found."
+msgstr "Variante no encontrada."
+
+#: src/Repositories/ReservationRepository.php:64
+#: src/Repositories/StockMovementRepository.php:106
+msgid "Not enough stock available."
+msgstr "No hay suficiente stock disponible."
+
+#: src/Repositories/ReservationRepository.php:82
+msgid "Failed to create order."
+msgstr "Ha fallado la creación del pedido."
+
+#: src/Repositories/ReservationRepository.php:103
+msgid "Failed to create order item."
+msgstr "Ha fallado la creación del elemento del pedido."
+
+#: src/Repositories/StockMovementRepository.php:37
+msgid "Invalid movement type."
+msgstr "Tipo de movimiento inválido."
+
+#: src/Repositories/StockMovementRepository.php:61
+msgid "Failed to insert movement log."
+msgstr "Ha fallado la inserción del registro de movimiento."
+
+#: src/Repositories/StockMovementRepository.php:88
+msgid "Manual sale qty must be > 0."
+msgstr "La cantidad de venta manual debe ser > 0."
+
+#: src/Repositories/StockMovementRepository.php:127
+msgid "Invalid adjustment: stock_total would be < stock_sold."
+msgstr "Ajuste inválido: el stock total sería < stock vendido."
+
+#: src/Repositories/StockMovementRepository.php:132
+msgid "Unhandled movement type."
+msgstr "Tipo de movimiento no gestionado."
+
+#: src/Services/PaymentReconciliationService.php:37
+msgid "No token detected"
+msgstr "No se ha detectado ningún token"
+
+#: src/Services/PaymentReconciliationService.php:42
+msgid "Multiple tokens detected in same row"
+msgstr "Múltiples tokens detectados en la misma fila"
+
+#: src/Services/PaymentReconciliationService.php:50
+msgid "Token repeated in CSV"
+msgstr "Token repetido en el CSV"

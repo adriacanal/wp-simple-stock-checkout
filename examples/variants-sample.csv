@@ -1,0 +1,11 @@
+sku,model,color,size,price,stock_total,is_active
+INF-BLUE-04,child,blue,4,8.00,12,1
+INF-BLUE-06,child,blue,6,8.00,10,1
+INF-RED-04,child,red,4,8.00,8,1
+INF-RED-06,child,red,6,8.00,6,1
+INF-GREEN-08,child,green,8,8.00,5,1
+ADU-BLACK-S,adult,black,S,10.00,7,1
+ADU-BLACK-M,adult,black,M,10.00,9,1
+ADU-BLACK-L,adult,black,L,10.00,6,1
+ADU-WHITE-M,adult,white,M,10.00,4,1
+ADU-WHITE-L,adult,white,L,10.00,3,1

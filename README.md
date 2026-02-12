@@ -1,92 +1,118 @@
 # WP Simple Stock Checkout
 
-**WP Simple Stock Checkout** és un plugin de WordPress per gestionar **estoc limitat amb reserves temporals** i **pagament extern** (TPV, Stripe, Redsys, etc.) sense utilitzar WooCommerce.
+**WP Simple Stock Checkout** és un plugin de WordPress per gestionar
+**estoc limitat amb reserves temporals** i **pagament extern** (TPV,
+Stripe, Redsys, Bizum, etc.) **sense WooCommerce**.
 
-Està pensat per a entitats, escoles, AFAs/AMPAs, associacions o esdeveniments que necessiten vendre productes simples amb control d’estoc i una operativa clara.
+Pensat per a **AFAs, escoles, associacions i entitats** que necessiten
+vendre productes simples amb control d'estoc i una operativa clara.
 
----
+------------------------------------------------------------------------
 
 ## ✨ Funcionalitats principals
 
-- Gestió d’estoc limitat per variants (SKU)
-- Reserves temporals per evitar sobreventa
-- Redirecció a passarel·les de pagament externes
-- Registre de vendes manuals (parades, caixa física)
-- Expiració automàtica de reserves (cron)
-- Importació i exportació d’estoc via CSV
-- Totalment independent de WooCommerce
+-   Gestió de **variants amb SKU**
+-   Control d'estoc:
+    -   `stock_total`
+    -   `stock_reserved`
+    -   `stock_sold`
+-   **Reserves temporals atòmiques** (evita sobreventa)
+-   **Expiració automàtica** de reserves (WP-Cron cada 5 minuts)
+-   Redirecció a **passarel·la de pagament externa**
+-   **Conciliació de pagaments via CSV**
+-   **Vendes manuals** (parades físiques) amb log d'estoc
+-   Activació / desactivació de variants
+-   Internacionalització (ca / es / en)
 
----
+------------------------------------------------------------------------
 
-## 🚫 Què **NO** fa aquest plugin
+## 🚫 Què NO fa aquest plugin
 
-Aquest plugin **no és** un e-commerce complet. Intencionadament:
-- ❌ No té carret
-- ❌ No gestiona enviaments
-- ❌ No calcula impostos
-- ❌ No processa pagaments directament
+Aquest plugin **no és un e-commerce complet**. Intencionadament:
 
-Si necessites això, WooCommerce és la millor opció.
-Si no, aquest plugin és més lleuger, simple i fàcil de mantenir.
+-   ❌ No té carret
+-   ❌ No gestiona enviaments
+-   ❌ No calcula impostos
+-   ❌ No processa pagaments directament
+-   ❌ No substitueix WooCommerce
 
----
+Si necessites un e-commerce complet → WooCommerce.\
+Si vols una solució lleugera i controlada → aquest plugin.
 
-## 🧠 Arquitectura (resum)
+------------------------------------------------------------------------
 
-- **WordPress (DB)**
-  → estoc, reserves, comandes, moviments manuals
+## 🧠 Model d'estoc
 
-- **Passarel·la externa**
-  → cobrament (TPVEscola, Stripe Checkout, Redsys, etc.)
+Per cada variant:
 
-- **Flux típic**
-  1. L’usuari selecciona variant i quantitat
-  2. El plugin reserva estoc i genera un codi de comanda
-  3. Redirecció a pagament extern
-  4. Conciliació posterior (manual o via import CSV)
+Disponible = stock_total - stock_sold - stock_reserved
 
----
-
-## 🧾 Casos d’ús habituals
-
-- Venda de samarretes o marxandatge d’una AFA
-- Entrades per esdeveniments petits
-- Productes solidaris
-- Venda amb parades físiques + web
-- Campanyes puntuals amb estoc limitat
-
----
+------------------------------------------------------------------------
 
 ## ⚙️ Requisits
 
-- WordPress 6.0 o superior
-- PHP 8.0 o superior
-- MySQL / MariaDB (estàndard WordPress)
+-   WordPress 6.7+
+-   PHP 8.0 -- 8.4
+-   MySQL / MariaDB
 
----
+------------------------------------------------------------------------
 
 ## 📦 Instal·lació
 
-1. Copia la carpeta `wp-simple-stock-checkout` a:
-```wp-content/plugins/```
-2. Activa el plugin des del panell d’administració
-3. Configura les opcions a:
-```WP Simple Stock Checkout → Configuració```
+1.  Copia la carpeta `wp-simple-stock-checkout` a `wp-content/plugins/`
+2.  Activa el plugin des del panell d'administració
+3.  Configura les opcions a `Stock Checkout → Settings`
 
----
+El plugin utilitza un autoloader PSR-4 intern i no requereix Composer en
+producció.
 
-## 🛠 Estat del projecte
+------------------------------------------------------------------------
 
-Aquest plugin està en desenvolupament actiu.
+## 🌐 Frontend -- Pàgines necessàries
 
-Roadmap aproximat:
-- v0.1 — Core + reserves + redirecció
-- v0.2 — Gestió de variants (admin)
-- v0.3 — Venda manual i moviments d’estoc
-- v0.4 — Import/export CSV
-- v1.0 — Versió estable per producció
+### Pàgina de reserva
 
----
+\[wpssc_reserve success_page="/reserve/"\]
+
+### Pàgina de finalització
+
+\[wpssc_reservation\]
+
+------------------------------------------------------------------------
+
+## 📦 Importació de variants (CSV)
+
+Header esperat:
+
+sku,model,color,size,price,stock_total,is_active
+
+------------------------------------------------------------------------
+
+## 💳 Conciliació de pagaments (CSV)
+
+Ruta: Stock Checkout → Payment reconciliation
+
+Plantilla recomanada:
+
+paid_at;amount;currency;token;reference;payer_email;notes
+
+------------------------------------------------------------------------
+
+## 📁 Carpeta examples/
+
+Inclou: - variants-sample.csv - payments-sample.csv
+
+------------------------------------------------------------------------
+
+## 🌍 Traduccions
+
+Inclou: - Català (ca) - Castellà (es) - Anglès (en)
+
+Ubicació: languages/
+
+Textdomain: wp-simple-stock-checkout
+
+------------------------------------------------------------------------
 
 ## 🤝 Contribucions
 
@@ -95,9 +121,17 @@ Les contribucions són benvingudes:
 - pull requests
 - millores de documentació
 
----
+------------------------------------------------------------------------
+
+## 🔐 Seguretat
+
+-   Capability checks
+-   Nonces en accions admin
+-   Tokens UUID validats
+-   Transaccions SQL per reserves i pagaments
+
+------------------------------------------------------------------------
 
 ## 📄 Llicència
 
-GPL v2 o posterior.
 Vegeu el fitxer [LICENSE](LICENSE) per a més informació.
