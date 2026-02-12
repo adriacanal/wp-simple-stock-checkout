@@ -4,6 +4,11 @@ Totes les modificacions rellevants d’aquest projecte es documenten aquí.
 
 ---
 
+## [1.0.2] - 2026-02-12
+
+### Fixed
+- Versió actualitzada a 1.0.2
+
 ## [1.0.1] - 2026-02-12
 
 ### Documentation
@@ -32,5 +37,6 @@ Totes les modificacions rellevants d’aquest projecte es documenten aquí.
 
 ---
 
+[1.0.2]: https://github.com/adriacanal/wp-simple-stock-checkout/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/adriacanal/wp-simple-stock-checkout/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/adriacanal/wp-simple-stock-checkout/releases/tag/v1.0.0
