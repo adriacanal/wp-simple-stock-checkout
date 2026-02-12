@@ -135,3 +135,9 @@ Les contribucions són benvingudes:
 ## 📄 Llicència
 
 Vegeu el fitxer [LICENSE](LICENSE) per a més informació.
+
+------------------------------------------------------------------------
+
+## 📄 Changelog
+
+Vegeu el fitxer [CHANGELOG.md](CHANGELOG.md) per l’historial de versions.
